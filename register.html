@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Registration Page</h1>
+        <form id="registrationForm" action="register.php" method="post">
+            <label for="username">Username:</label>
+            <input name="username" id="username" type="text" required>
+            <br>
+            <label for="email">Your Email Address:</label>
+            <input name="email" id="email" type="email" required>
+            <br>
+            <label for="password">Your Password:</label>
+            <input name="password" id="password" type="password" required>
+            <br>
+            <input type="hidden" name="hashedPassword" id="hashedPassword">
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const passwordInput = document.getElementById('password');
+            const hashedPasswordInput = document.getElementById('hashedPassword');
+
+            if (passwordInput.value) {
+                const hashedPassword = CryptoJS.SHA256(passwordInput.value).toString();
+                hashedPasswordInput.value = hashedPassword;
+                passwordInput.value = ''; 
+            }
+
+            this.submit();
+        });
+    </script>
+</body>
+</html>
